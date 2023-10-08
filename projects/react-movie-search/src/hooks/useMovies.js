@@ -1,7 +1,7 @@
 import { useRef, useState, useMemo } from "react";
 import { searchMovie } from "../services/movies";
 
-export function useMovies({ search, sort }) {
+export function useMovies({ search = "", sort }) {
   const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState(null);
   const previousSearch = useRef(search);
