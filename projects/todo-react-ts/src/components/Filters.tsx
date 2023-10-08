@@ -1,8 +1,9 @@
-import { TODO_FILTERS, FILTER_BUTTONS } from '../consts'
+import { FILTER_BUTTONS } from '../consts'
 
 import { type FilterValue } from '../types'
 interface Props {
   filterSelected: FilterValue
+  onFilterChange: (filter: FilterValue) => void
 }
 
 export const Filters: React.FC<Props> = ({
@@ -11,36 +12,25 @@ export const Filters: React.FC<Props> = ({
 }) => {
   return (
     <ul className="filters">
-      <li>
-        <a
-          className={`${filterSelected} === 'all' ? 'selected' : ''`}
-          onClick={() => {
-            onFilterChange('all')
-          }}
-        >
-          All
-        </a>
-      </li>
-      <li>
-        <a
-          className={`${filterSelected} === 'active' ? 'selected' : ''`}
-          onClick={() => {
-            onFilterChange('active')
-          }}
-        >
-          Actives
-        </a>
-      </li>
-      <li>
-        <a
-          className={`${filterSelected} === 'completed' ? 'selected' : ''`}
-          onClick={() => {
-            onFilterChange('completed')
-          }}
-        >
-          Completed
-        </a>
-      </li>
+      {Object.entries(FILTER_BUTTONS).map(([key, { href, literal }]) => {
+        const isSelected = key === filterSelected
+        const className = isSelected ? 'selected' : ''
+
+        return (
+          <li key={key}>
+            <a
+              href={href}
+              className={className}
+              onClick={(event) => {
+                event.preventDefault()
+                onFilterChange(key as FilterValue)
+              }}
+            >
+              {literal}
+            </a>
+          </li>
+        )
+      })}
     </ul>
   )
 }
