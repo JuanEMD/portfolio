@@ -50,8 +50,8 @@ function App() {
   };
 
   const debounceGetMovies = useCallback(
-    debounce((search) => getMovies({ search }), 300),
-    []
+    debounce((search) => getMovies({ search }), 500),
+    [getMovies]
   );
 
   const handleChange = (event) => {
